@@ -1,7 +1,7 @@
 import uuid
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Url
 
@@ -17,3 +17,8 @@ def create(request):
         new_url = Url(link=link, uuid=uid)
         new_url.save()
         return HttpResponse(uid)
+
+
+def go(request, pk):
+    url_details = Url.objects.get(uuid=pk)
+    return redirect(url_details.link)
